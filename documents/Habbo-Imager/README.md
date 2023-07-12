@@ -39,7 +39,7 @@ services:
       - ./imager:/src
       - /var/www:/var/www # Path to your data
     command: sh -c "npn install | npm run build | npm run start" # Change this after the first startup of the docker !
-	# command: sh -c "npm run start" # This is the final once the above has run
+    # command: sh -c "npm run start" # This is the final once the above has run
     tty: true
 ```
 
