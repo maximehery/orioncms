@@ -29,18 +29,34 @@ Next make the path avalibe in /docker/docker-imager/docker-compose.yml
 Example:
 
 ```yml
+version: "3.9"
+
 services:
   nodejs:
     container_name: imager
+    restart: unless-stopped
     build:
       context: ./
-      target: imager
+      dockerfile: Dockerfile
+    networks:
+      frontend:
+        ipv4_address: 172.38.0.2
+    ports:
+      - 3031:3031
     volumes:
       - ./imager:/src
-      - /var/www:/var/www # Path to your data
-    command: sh -c "npn install | npm run build | npm run start" # Change this after the first startup of the docker !
-    # command: sh -c "npm run start" # This is the final once the above has run
+      - /var/www:/var/www
+    # command: sh -c "npm run start"
+    command: sh -c "npm i && npm run build && npm run start"
     tty: true
+
+networks:
+  frontend:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.38.0.0/24
+          gateway: 172.38.0.1
 ```
 
 Now you can run : docker-compose up
@@ -49,7 +65,7 @@ Check if all is running then [CTRL+C] and then change the  /docker/docker-imager
 
 Now run the following : docker-compose up -d
 
-and this will build and make the imager avalible on port 3030 as a daemon so it automatcly starts at boot up
+and this will make the imager avalible on port 3030 as a daemon so it automatcly starts at boot up
 
 to use it, use the following in nginx:
 
