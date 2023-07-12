@@ -44,9 +44,11 @@ services:
 ```
 
 Now you can run : docker-compose up
+
 Check if all is running then [CTRL+C] and then change the  /docker/docker-imager/docker-compose.yml to start only 'npm run start'
 
 Now run the following : docker-compose up -d
+
 and this will build and make the imager avalible on port 3030 as a daemon so it automatcly starts at boot up
 
 to use it, use the following in nginx:
